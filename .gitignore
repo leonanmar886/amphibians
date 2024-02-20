@@ -15,4 +15,4 @@
 local.properties
 /.idea
 /app/.gitignore
-
+/app/build
