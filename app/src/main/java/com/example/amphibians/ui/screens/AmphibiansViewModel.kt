@@ -10,6 +10,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.launch
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import com.example.amphibians.AmphibiansApplication
 import com.example.amphibians.data.AmphibiansRepository
 import com.example.amphibians.model.Amphibian
 
@@ -33,6 +34,16 @@ class AmphibiansViewModel(private val repository: AmphibiansRepository): ViewMod
         AmphibiansUiState.Success(repository.getAmphibians())
       } catch (e: Exception) {
         AmphibiansUiState.Error
+      }
+    }
+  }
+  
+  companion object {
+    val Factory : ViewModelProvider.Factory = viewModelFactory {
+      initializer {
+        val application = (this[APPLICATION_KEY] as AmphibiansApplication)
+        val amphibianRepository = application.container.amphibianRepository
+        AmphibiansViewModel(repository = amphibianRepository)
       }
     }
   }
